@@ -74,4 +74,29 @@ const automateJournal = async (username, password) => {
   await driver.quit();
   return { result, status };
 };
-module.exports = automateJournal;
+const automateTranscript = async (username, password) => {
+  let status = false;
+  let result = "";
+  let driver = new Builder()
+    .forBrowser("chrome")
+    .setChromeOptions(options)
+    .build();
+  try {
+    await driver.get("http://kabinet.unec.edu.az/");
+    await driver
+      .findElement(By.id("LoginForm_username"))
+      .sendKeys(username, Key.RETURN);
+    await driver
+      .findElement(By.id("LoginForm_password"))
+      .sendKeys(password, Key.RETURN);
+    await driver.get("http://kabinet.unec.edu.az/az/etranscript");
+
+    result = await driver.takeScreenshot();
+    status = true;
+  } catch (e) {
+    result = "Try again";
+  }
+  await driver.quit();
+  return { result, status };
+};
+module.exports = { automateJournal, automateTranscript };
