@@ -16,16 +16,18 @@ bot.onText(/\/journal/, async (msg) => {
     bot.sendMessage(chatId, "Please login");
   }
 });
-bot.onText(/\/transcript/, async (msg) => {
-  const chatId = msg.chat.id;
-  if (username) {
-    await automateTranscript(username, password);
-    const pdf = fs.createReadStream("./etranscript.pdf");
-    bot.sendDocument(chatId, pdf);
-  } else {
-    bot.sendMessage(chatId, "Please login");
-  }
-});
+// bot.onText(/\/transcript/, async (msg) => {
+//   const chatId = msg.chat.id;
+//   const user = users.find((el) => el.chatId == chatId);
+//   if (user?.data.username) {
+//     await automateTranscript(user.data.username, user.data.password);
+//     // console.log(pdf);/Users/ismayilzada/Desktop/GitHub/unec-kabinet/etranscript.pdf.crdownload
+//     const pdf = fs.createReadStream("./etranscript.pdf.crdownload");
+//     bot.sendDocument(chatId, pdf);
+//   } else {
+//     bot.sendMessage(chatId, "Please login");
+//   }
+// });
 bot.onText(/\/login/, (msg) => {
   const chatId = msg.chat.id;
   bot.sendMessage(

@@ -4,7 +4,7 @@ const bot = new TelegramBot(token, { polling: true });
 const commands = [
   { command: "login", description: "Login" },
   { command: "journal", description: "View the e-journal" },
-  { command: "transcript", description: "View the e-transcript" },
+  // { command: "transcript", description: "View the e-transcript" },
 ];
 module.exports = {
   bot,

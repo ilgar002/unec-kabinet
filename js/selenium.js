@@ -89,7 +89,7 @@ const automateTranscript = async (username, password) => {
     await driver
       .findElement(By.id("LoginForm_password"))
       .sendKeys(password, Key.RETURN);
-    await driver.get("http://kabinet.unec.edu.az/az/etranscript");
+    await driver.get("http://kabinet.unec.edu.az/az/etranscript?");
     result = await driver.takeScreenshot();
     status = true;
   } catch (e) {
