@@ -90,7 +90,6 @@ const automateTranscript = async (username, password) => {
       .findElement(By.id("LoginForm_password"))
       .sendKeys(password, Key.RETURN);
     await driver.get("http://kabinet.unec.edu.az/az/etranscript");
-
     result = await driver.takeScreenshot();
     status = true;
   } catch (e) {
@@ -99,4 +98,34 @@ const automateTranscript = async (username, password) => {
   await driver.quit();
   return { result, status };
 };
-module.exports = { automateJournal, automateTranscript };
+const login = async (username, password) => {
+  let status = false;
+  let result = "";
+  let driver = new Builder()
+    .forBrowser("chrome")
+    .setChromeOptions(options)
+    .build();
+  try {
+    await driver.get("http://kabinet.unec.edu.az/");
+    await driver
+      .findElement(By.id("LoginForm_username"))
+      .sendKeys(username, Key.RETURN);
+    await driver
+      .findElement(By.id("LoginForm_password"))
+      .sendKeys(password, Key.RETURN);
+    const nameSurname = await driver
+      .findElement(
+        By.css(
+          "body > div.main-container.container-fluid > div > div.page-content > div.right-panel > div > div:nth-child(2) > div.right-text-2"
+        )
+      )
+      .getText();
+    result = "Login is successful";
+    status = true;
+  } catch (e) {
+    result = "Login failed. Try again";
+  }
+  await driver.quit();
+  return { result, status };
+};
+module.exports = { automateJournal, automateTranscript, login };
