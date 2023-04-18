@@ -98,7 +98,7 @@ const automateTranscript = async (username, password) => {
   await driver.quit();
   return { result, status };
 };
-const login = async (username, password) => {
+const automateLogin = async (username, password) => {
   let status = false;
   let result = "";
   let driver = new Builder()
@@ -128,4 +128,4 @@ const login = async (username, password) => {
   await driver.quit();
   return { result, status };
 };
-module.exports = { automateJournal, automateTranscript, login };
+module.exports = { automateJournal, automateTranscript, automateLogin };
