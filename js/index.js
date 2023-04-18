@@ -1,7 +1,7 @@
-const { bot, commands } = require("./telegram");
+let { bot, commands, initCommands } = require("./telegram");
 const { automateJournal, automateTranscript, login } = require("./selenium");
 const fs = require("fs");
-bot.setMyCommands(commands);
+bot.setMyCommands(initCommands);
 let users = [];
 bot.onText(/\/journal/, async (msg) => {
   const chatId = msg.chat.id;
@@ -32,7 +32,7 @@ bot.onText(/\/login/, (msg) => {
   const chatId = msg.chat.id;
   bot.sendMessage(
     chatId,
-    "Enter username and password(for login)\nFor example: s.salahov1,rsha123"
+    "Enter username and password for login\nFor example: s.salahov1,rsha123"
   );
   bot.on("message", async (msg) => {
     const chatId = msg.chat.id;
@@ -48,12 +48,27 @@ bot.onText(/\/login/, (msg) => {
             password: text[1],
           },
         };
-        users.push(user);
-        console.log(users);
+        const aviability = users.find((el) => el.chatId == chatId);
+        if (aviability) {
+          const index = users.indexOf(aviability);
+          users[index] = user;
+        } else {
+          users.push(user);
+        }
         bot.sendMessage(chatId, result);
+        bot.setMyCommands(commands);
       } else {
         bot.sendMessage(chatId, result);
       }
     }
   });
+});
+bot.onText(/\/logout/, (msg) => {
+  const chatId = msg.chat.id;
+  const aviability = users.find((el) => el.chatId == chatId);
+  if (aviability) {
+    users = users.filter((el) => el.chatId != chatId);
+    bot.sendMessage(chatId, "Logout is successfull");
+    bot.setMyCommands(initCommands);
+  }
 });
