@@ -24,7 +24,7 @@ let initCommands = [
   },
 ];
 const logout = async (chatId, users) => {
-  const aviability = users.find((el) => el.chatId == chatId);
+  const aviability = users?.find((el) => el.chatId == chatId);
   if (aviability) {
     users = users.filter((el) => el.chatId != chatId);
     bot.sendMessage(chatId, "Logout is successfull");
@@ -50,7 +50,7 @@ const login = async (chatId, users) => {
             password: text[1],
           },
         };
-        const aviability = users.find((el) => el.chatId == chatId);
+        const aviability = users?.find((el) => el.chatId == chatId);
         if (aviability) {
           const index = users.indexOf(aviability);
           users[index] = user;
@@ -66,7 +66,7 @@ const login = async (chatId, users) => {
   });
 };
 const journal = async (chatId, users) => {
-  const user = users.find((el) => el.chatId == chatId);
+  const user = users?.find((el) => el.chatId == chatId);
   if (user?.data.username) {
     const { result } = await automateJournal(
       user.data.username,
@@ -78,7 +78,7 @@ const journal = async (chatId, users) => {
   }
 };
 const transcript = async (chatId, users) => {
-  const user = users.find((el) => el.chatId == chatId);
+  const user = users?.find((el) => el.chatId == chatId);
   if (user?.data.username) {
     await automateTranscript(user.data.username, user.data.password);
     // console.log(pdf);/Users/ismayilzada/Desktop/GitHub/unec-kabinet/etranscript.pdf.crdownload
